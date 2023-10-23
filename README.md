@@ -31,3 +31,9 @@ This Nextjs starter is intended to be used with a Headless Wordpress backend. Fi
 ## Linting and Formatting
 
 For linting and formatting see [`LINTING.md`](./LINTING.md).
+
+## Contributing
+
+I so welcome contributions to making this better! Please create a fork and commit your changes to the fork. Then make a PR from the fork to this repo's "develop" branch.
+
+I will code review. Once changes are accepted, it can be merged into develop and then on to the main branch.
