@@ -17,7 +17,6 @@ export const SEARCH = `search`
 export const SCRIPT = `script`
 export const STYLE = `style`
 export const STYLE_SHEET = `stylesheet`
-export const PAGE_TITLE = `Extra Thick - Original Pacific Northwest Afrobeat`
 
 export const MAX_AGE = 60 * 30 // 30 minutes
 
