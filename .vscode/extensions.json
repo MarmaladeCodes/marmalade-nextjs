@@ -1,0 +1,13 @@
+{
+	"recommendations": [
+		"bierner.markdown-preview-github-styles",
+		"DavidAnson.vscode-markdownlint",
+		"dbaeumer.vscode-eslint",
+		"esbenp.prettier-vscode",
+		"Gruntfuggly.todo-tree",
+		"eamodio.gitlens",
+		"mikestead.dotenv",
+		"socheatsok78-lab.dotenv-vscode-stripped",
+		"streetsidesoftware.code-spell-checker"
+	]
+}
