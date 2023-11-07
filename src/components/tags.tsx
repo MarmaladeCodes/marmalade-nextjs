@@ -1,6 +1,6 @@
-import { TagEdge } from 'types/index'
+import { TagEdge } from 'types'
 
-export default function Tags({ tags: { edges } }: { tags: { edges: TagEdge[] } }) {
+export function Tags({ tags: { edges } }: { tags: { edges: TagEdge[] } }) {
 	return (
 		<div className='max-w-2xl mx-auto'>
 			<p className='mt-8 text-lg font-bold'>

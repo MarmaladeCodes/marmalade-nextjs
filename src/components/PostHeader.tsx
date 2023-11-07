@@ -1,11 +1,8 @@
-import Avatar from './avatar'
-import Date from './date'
-import CoverImage from './cover-image'
-import PostTitle from './post-title'
-import Categories from './categories'
-import { Post } from 'types/index'
+import { Avatar, Categories, Date, PostTitle } from 'components'
+import { Post } from 'types'
+import CoverImage from './CoverImage'
 
-export default function PostHeader({
+export function PostHeader({
 	title,
 	coverImage,
 	date,

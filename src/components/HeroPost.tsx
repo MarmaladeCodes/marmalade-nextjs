@@ -1,10 +1,9 @@
-import Avatar from './avatar'
-import Date from './date'
-import CoverImage from './cover-image'
+import { Avatar, Date } from 'components'
 import Link from 'next/link'
-import { Post } from 'types/index'
+import { Post } from 'types'
+import CoverImage from './CoverImage'
 
-export default function HeroPost({
+export function HeroPost({
 	title,
 	coverImage,
 	date,

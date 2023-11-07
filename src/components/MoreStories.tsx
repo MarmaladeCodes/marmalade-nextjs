@@ -1,7 +1,7 @@
-import { PostEdge } from 'types/Categories'
-import PostPreview from './post-preview'
+import { PostPreview } from 'components'
+import { PostEdge } from 'types'
 
-export default function MoreStories({ posts }: { posts: PostEdge[] }) {
+export function MoreStories({ posts }: { posts: PostEdge[] }) {
 	return (
 		<section>
 			<h2 className='mb-8 text-6xl md:text-7xl font-bold tracking-tighter leading-tight'>
