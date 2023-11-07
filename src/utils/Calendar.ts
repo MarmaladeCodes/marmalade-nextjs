@@ -1,4 +1,4 @@
-import { parseIcsCalendar, VCalendar } from 'ts-ics'
+import { VCalendar, parseIcsCalendar } from 'ts-ics'
 import { ICS_URL } from 'utils/constants'
 
 export function getGoogleDriveImage(url: string) {
