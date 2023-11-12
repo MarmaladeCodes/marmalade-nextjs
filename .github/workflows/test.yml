@@ -38,24 +38,24 @@ jobs:
           echo "::endgroup::"
         id: environment
 
-      - name: Checkout code
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
+      # - name: Checkout code
+      #   uses: actions/checkout@v4
+      #   with:
+      #     fetch-depth: 0
 
-      - name: Get changed dependency files
-        id: changed_deps
-        uses: tj-actions/changed-files@v39
-        with:
-          files: |
-            package.json
-            yarn.lock
+      # - name: Get changed dependency files
+      #   id: changed_deps
+      #   uses: tj-actions/changed-files@v39
+      #   with:
+      #     files: |
+      #       package.json
+      #       yarn.lock
 
-      - name: Did Deps Change
-        run: |
-          echo "::group::Changes"
-          echo 'Changed?: '${{ steps.changed_deps.outputs.any_changed }}
-          echo "::endgroup::"
+      # - name: Did Deps Change
+      #   run: |
+      #     echo "::group::Changes"
+      #     echo 'Changed?: '${{ steps.changed_deps.outputs.any_changed }}
+      #     echo "::endgroup::"
 
   # build_dep_image:
   #   name: Build dependency image
