@@ -1,12 +1,8 @@
-import { Head } from 'components/partials'
+import { Container, HeroPost, Intro, Layout, MoreStories } from 'components'
 import { GetStaticProps } from 'next'
-import Container from '../components/container'
-import MoreStories from '../components/more-stories'
-import HeroPost from '../components/hero-post'
-import Intro from '../components/intro'
-import Layout from '../components/layout'
+import { Head } from 'components/partials'
 import { getAllPostsForHome } from 'utils/api'
-import { PAGE_TITLE } from 'utils/constants'
+import { PAGE_TITLE } from 'utils/constants/home'
 import { PostEdge, Preview } from 'types/index'
 
 export default function Index({

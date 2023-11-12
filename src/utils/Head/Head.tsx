@@ -1,17 +1,6 @@
 import { Fragment } from 'react'
-// Constants.
-import {
-	DNS_PREFETCH,
-	FETCH,
-	PRECONNECT,
-	PREFETCH,
-	PRELOAD,
-	ROOT_TOKEN,
-	SCRIPT,
-	STYLE
-} from 'utils/constants'
 // Utilities.
-import { removeProtocolOrSlash } from 'utils/urlUtil'
+import { removeProtocolOrSlash } from 'utils'
 // Components.
 import {
 	LinkAttr,
@@ -23,6 +12,17 @@ import {
 	ScriptData,
 	ScriptTags
 } from 'partials/Head/HeadProps'
+// Constants.
+import {
+	DNS_PREFETCH,
+	FETCH,
+	PRECONNECT,
+	PREFETCH,
+	PRELOAD,
+	ROOT_TOKEN,
+	SCRIPT,
+	STYLE
+} from 'utils/constants'
 
 export const LD_JSON_TYPE = `application/ld+json`
 export const LINK_KEY_PREFIX = `headLink`

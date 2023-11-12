@@ -1,5 +1,5 @@
 if (!process.env.WP_DOMAIN) {
-  throw new Error(`
+	throw new Error(`
     Please provide a valid WordPress instance Domain.
     Set to the environment variables WP_DOMAIN.
   `)
@@ -14,15 +14,34 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({
 
 module.exports = withBundleAnalyzer({
 	reactStrictMode: true,
-  images: {
-    domains: [
-      process.env.WP_DOMAIN,
-      '0.gravatar.com',
-      '1.gravatar.com',
-      '2.gravatar.com',
-      'secure.gravatar.com',
-    ],
-  },
+	images: {
+		remotePatterns: [
+			{
+				protocol: 'https',
+				hostname: process.env.WP_DOMAIN
+			},
+			{
+				protocol: 'https',
+				hostname: '0.gravatar.com'
+			},
+			{
+				protocol: 'https',
+				hostname: '1.gravatar.com'
+			},
+			{
+				protocol: 'https',
+				hostname: '2.gravatar.com'
+			},
+			{
+				protocol: 'https',
+				hostname: 'drive.google.com'
+			},
+			{
+				protocol: 'https',
+				hostname: 'secure.gravatar.com'
+			}
+		]
+	},
 	output: 'standalone',
 	webpack: (config) => {
 		// Fixes npm packages that depend on `fs` module
@@ -46,5 +65,5 @@ module.exports = withBundleAnalyzer({
 		// Note: linting is already run on PRs into development;
 		// Doing it during build-time is duplicative
 		ignoreDuringBuilds: true
-	},
+	}
 })
