@@ -1,23 +1,25 @@
-import { useRouter } from 'next/router'
+import {
+	Container,
+	Header,
+	Layout,
+	MoreStories,
+	PostBody,
+	PostHeader,
+	PostTitle,
+	SectionSeparator,
+	Tags
+} from 'components'
+import { GetStaticPaths, GetStaticProps, PreviewData } from 'next'
 import ErrorPage from 'next/error'
 import Head from 'next/head'
-import { GetStaticPaths, GetStaticProps, PreviewData } from 'next'
-import Container from 'components/container'
-import PostBody from 'components/post-body'
-import MoreStories from 'components/more-stories'
-import Header from 'components/header'
-import PostHeader from 'components/post-header'
-import SectionSeparator from 'components/section-separator'
-import Layout from 'components/layout'
-import PostTitle from 'components/post-title'
-import Tags from 'components/tags'
-import { getAllPostsWithSlug, getPostAndMorePosts } from 'utils/api'
-import { CMS_NAME } from 'utils/constants'
-import { PostEdge, Post, Preview } from 'types/index'
+import { useRouter } from 'next/router'
 import { ParsedUrlQuery } from 'querystring'
+import { PostEdge, Post as PostType, Preview } from 'types'
+import { getAllPostsWithSlug, getPostAndMorePosts } from 'utils'
+import { CMS_NAME } from 'utils/constants'
 
 interface PostProps {
-	post: Post
+	post: PostType
 	posts: { edges: PostEdge[] }
 	preview: Preview
 }
@@ -88,7 +90,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
 	const allPosts = await getAllPostsWithSlug()
 
 	return {
-		paths: allPosts.edges.map(({ node }: { node: Post }) => `/posts/${node.slug}`) || [],
+		paths: allPosts.edges.map(({ node }: { node: PostType }) => `/posts/${node.slug}`) || [],
 		fallback: true
 	}
 }
