@@ -1,15 +1,12 @@
 import { DateTime } from 'luxon'
 import { VCalendar, parseIcsCalendar } from 'ts-ics'
-import { ICS_URL } from 'utils/constants'
+import { GOOGLE_IMAGE_URL, ICS_URL } from 'utils/constants'
 
 export enum DateFormatType {
 	DATE = 'MMMM dd, yyyy',
 	TIME = 'h:mm'
 }
 type DateFormat = DateFormatType.DATE | DateFormatType.TIME | string
-
-export const GOOGLE_IMAGE_SIZE_PARAM = 'sz=w1000'
-export const GOOGLE_IMAGE_URL = 'https://drive.google.com/uc?export=view&id='
 
 export function compareDate(date: DateTime): number {
 	const today = DateTime.local()
@@ -21,6 +18,16 @@ export function compareDate(date: DateTime): number {
 	}
 	// today > eventDate
 	return -1
+}
+
+export function fixGoogleIcsString(string?: string): string {
+	if (!string) return ''
+	return string
+		.replace(/\\,/g, ',')
+		.replace(/\\n/g, '\n')
+		.replace(/\\N/g, 'N')
+		.replace(/\\\\/g, '\\')
+		.replace(/\\;/g, ';')
 }
 
 export function formatDate({
@@ -47,7 +54,7 @@ export function getGoogleDriveImage(url: string) {
 			console.log(`getGoogleDriveImage was passed a URL with no image id (${url})`)
 			return ''
 		}
-		return `${GOOGLE_IMAGE_URL}${id}&${GOOGLE_IMAGE_SIZE_PARAM}`
+		return `${GOOGLE_IMAGE_URL(id)}`
 	} catch (error) {
 		console.error(`getGoogleDriveImage was passed an invalid URL (${url})`, error)
 		return ''
