@@ -1,5 +1,5 @@
 import { VEvent } from 'ts-ics'
-import { DateFormatType, formatDate, getGoogleDriveImage } from 'utils'
+import { DateFormatType, fixGoogleIcsString, formatDate, getGoogleDriveImage } from 'utils'
 
 export const END_TIME_PREFIX = 'till '
 export const LOCATION_PREFIX = '@ '
@@ -12,14 +12,16 @@ export function Event({
 	data: VEvent
 	index?: number
 }): JSX.Element {
+	description = fixGoogleIcsString(description)
+	location = location?.replaceAll('\\', '')
+	summary = fixGoogleIcsString(summary)
 	const endTime = formatDate({ date: end?.date, format: DateFormatType.TIME })
 	const date = formatDate({ date: start.date })
-	location = location?.replaceAll('\\', '')
 	const locationList: string[] = location?.split(',') || []
 	const startTime = formatDate({ date: start.date, format: DateFormatType.TIME })
 	const poster = attach ? getGoogleDriveImage(attach) : undefined
 	return (
-		<div key={index} className={`pb-6 flex`}>
+		<div key={`event-${startTime}-${index}`} className={`pb-6 flex`}>
 			<div className={`content-event`}>
 				<h3 className={`text-2xl font-bold pb-2`}>{summary}</h3>
 				{locationList[0] && (
@@ -46,7 +48,7 @@ export function Event({
 				)}
 				{description && <section dangerouslySetInnerHTML={{ __html: description }} />}
 			</div>
-			{poster && (
+			{poster && false && (
 				<div className={`poster-event`}>
 					<a href={poster} target='_blank' rel='noopener noreferrer'>
 						<img

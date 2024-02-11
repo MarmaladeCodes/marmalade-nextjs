@@ -1,13 +1,7 @@
 import { faker } from '@faker-js/faker'
 import { DateTime } from 'luxon'
-import {
-	DateFormatType,
-	GOOGLE_IMAGE_SIZE_PARAM,
-	GOOGLE_IMAGE_URL,
-	compareDate,
-	formatDate,
-	getGoogleDriveImage
-} from 'utils/Calendar'
+import { DateFormatType, compareDate, formatDate, getGoogleDriveImage } from 'utils/Calendar'
+import { GOOGLE_IMAGE_URL } from 'utils/constants'
 
 describe('compareDate', () => {
 	it('returns 1 if passed date is in the future', () => {
@@ -65,14 +59,14 @@ describe('getGoogleDriveImage', () => {
 	it('returns Google Drive image URL', () => {
 		const id = faker.string.uuid()
 		const url = `${faker.internet.url()}?id=${id}`
-		const expected = `${GOOGLE_IMAGE_URL}${id}&${GOOGLE_IMAGE_SIZE_PARAM}`
+		const expected = `${GOOGLE_IMAGE_URL(id)}`
 		expect(getGoogleDriveImage(url)).toBe(expected)
 	})
 
 	it('returns correct URL if ID has special characters', () => {
 		const id = faker.internet.password()
 		const url = `${faker.internet.url()}?id=${id}`
-		const expected = `${GOOGLE_IMAGE_URL}${id}&${GOOGLE_IMAGE_SIZE_PARAM}`
+		const expected = `${GOOGLE_IMAGE_URL(id)}`
 		expect(getGoogleDriveImage(url)).toBe(expected)
 	})
 
