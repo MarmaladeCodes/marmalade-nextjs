@@ -5,7 +5,7 @@ import { PreviewProps } from 'types'
 export function Layout({ preview, children }: PropsWithChildren<PreviewProps>) {
 	return (
 		<>
-			<div className='min-h-screen'>
+			<div className='min-h-screen bg-gray-1 text-white'>
 				<Alert preview={preview} />
 				<main>{children}</main>
 			</div>

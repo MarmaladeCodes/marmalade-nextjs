@@ -77,7 +77,7 @@ export function HEAD_META({
 	msapplicationTileColor,
 	themeColor
 }: {
-	description: string
+	description?: string
 	homeOgImageUrl: string
 	msapplicationTileColor?: string
 	themeColor?: string
@@ -108,7 +108,7 @@ export function HEAD_META({
 		},
 		{
 			content: 'description',
-			name: description
+			name: description ?? `The homepage for the Seattle musical group, Marmalade.`
 		},
 		{
 			content: homeOgImageUrl,

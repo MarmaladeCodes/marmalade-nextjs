@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       branch: ${{ steps.target_branch.outputs.branch }}
-      changed_deps: ${{ steps.changed_deps.outputs.any_changed }}
+      # changed_deps: ${{ steps.changed_deps.outputs.any_changed }}
       env_name: ${{ steps.environment.outputs.name }}
     steps:
       - name: Get target branch

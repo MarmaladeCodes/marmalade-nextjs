@@ -1,7 +1,6 @@
 import { PreviewData } from 'next/types'
-import { Post, Preview } from 'types/index'
-
-const GRAPHQL_URL = process.env.GRAPHQL_URL
+import { Post, Preview } from 'types'
+import { API_CONTACT, API_HOMEPAGE, GRAPHQL_URL } from 'utils/constants'
 
 async function fetchAPI(query = '', { variables }: Record<string, unknown> = {}) {
 	const headers: Record<string, string> = { 'Content-Type': 'application/json' }
@@ -100,6 +99,60 @@ export async function getAllPostsForHome(preview: Preview) {
 	)
 
 	return data?.posts
+}
+
+export async function getContactData() {
+	const data = await fetchAPI(
+		`query ContactInfo {
+      page(id: "${API_CONTACT}", idType: URI) {
+        contactInfo {
+          contact {
+            name
+            email
+          }
+          social {
+            bandcamp
+            facebook
+            instagram
+            reverbnation
+            twitterX
+          }
+        }
+      }
+    }`
+	)
+
+	return data?.page.contactInfo
+}
+
+export async function getHomePageData() {
+	const data = await fetchAPI(
+		`query HomePage {
+      page(id: "${API_HOMEPAGE}", idType: URI) {
+        homePage {
+          bio
+          bioTitle
+          calendarId
+          calendarTitle
+          contactSectionTitle
+          heroImage {
+            node {
+              altText
+              mediaItemUrl
+            }
+          }
+          musicTitle
+          musicDesc
+          playerSectionTitle
+          playerTitle
+          rnArtistId
+          title
+        }
+      }
+    }`
+	)
+
+	return data?.page.homePage
 }
 
 export async function getPostAndMorePosts({
