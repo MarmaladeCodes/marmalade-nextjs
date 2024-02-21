@@ -62,7 +62,7 @@ module.exports = withBundleAnalyzer({
 		defaultLocale: 'en'
 	},
 	eslint: {
-		// Note: linting is already run on PRs into development;
+		// Note: linting is already run on PRs into develop;
 		// Doing it during build-time is duplicative
 		ignoreDuringBuilds: true
 	}
