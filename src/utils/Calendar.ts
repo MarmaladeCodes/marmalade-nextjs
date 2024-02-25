@@ -9,7 +9,8 @@ export enum DateFormatType {
 type DateFormat = DateFormatType.DATE | DateFormatType.TIME | string
 
 export function compareDate(date: DateTime): number {
-	const today = DateTime.local()
+	const today = DateTime.local().startOf('day')
+	date = date.startOf('day')
 
 	if (today < date) {
 		return 1
@@ -38,7 +39,7 @@ export function formatDate({
 	format?: DateFormat
 }): string | null {
 	if (!date) return null
-	const normalizedDate = date instanceof Date ? date : new Date(date)
+	const normalizedDate = normalizeDate(date)
 	if (isNaN(normalizedDate.getTime())) {
 		console.error(`formatDate was passed an invalid date (${date})`)
 		return null
@@ -75,4 +76,8 @@ export async function getIcs(id: string): Promise<VCalendar | undefined> {
 	} catch (error) {
 		console.log(error)
 	}
+}
+
+export function normalizeDate(date: Date | string): Date {
+	return date instanceof Date ? date : new Date(date)
 }
