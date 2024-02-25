@@ -1,6 +1,6 @@
 import { DateTime } from 'luxon'
 import { VEvent } from 'ts-ics'
-import { DateFormatType, compareDate, formatDate } from 'utils'
+import { DateFormatType, compareDate, formatDate, normalizeDate } from 'utils'
 import { Event } from './Event'
 
 export const NO_EVENTS_MSG = 'Stay tuned!'
@@ -43,7 +43,7 @@ function buildAndSortEvents({
 }): JSX.Element[] {
 	const eventObj: { [date: string]: JSX.Element } = {}
 	events.forEach((event: VEvent, index: number): void => {
-		const date = event.start.date
+		const date = normalizeDate(event.start.date)
 		const formattedDate = formatDate({ date })
 		if (!formattedDate) return
 		const timestamp = date.getTime()
