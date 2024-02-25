@@ -9,7 +9,8 @@ export enum DateFormatType {
 type DateFormat = DateFormatType.DATE | DateFormatType.TIME | string
 
 export function compareDate(date: DateTime): number {
-	const today = DateTime.local()
+	const today = DateTime.local().startOf('day')
+	date = date.startOf('day')
 
 	if (today < date) {
 		return 1

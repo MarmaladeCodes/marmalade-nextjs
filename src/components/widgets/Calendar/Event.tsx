@@ -21,13 +21,13 @@ export function Event({
 	const startTime = formatDate({ date: start.date, format: DateFormatType.TIME })
 	const poster = attach ? getGoogleDriveImage(attach) : undefined
 	return (
-		<div key={`event-${startTime}-${index}`} className={`pb-6 flex`}>
+		<div key={`event-${startTime}-${index}`} className={`event pb-6 flex`}>
 			<div className={`content-event`}>
 				<h3 className={`text-2xl font-bold pb-2`}>{summary}</h3>
 				{locationList[0] && (
 					<p className={`text-1xl font-semibold pb-1`}>{`${LOCATION_PREFIX}${locationList[0]}`}</p>
 				)}
-				{date && <p>{date}</p>}
+				{date && <p className={`event-date`}>{date}</p>}
 				{(endTime || startTime) && (
 					<p>
 						{startTime && <span>{startTime}</span>}

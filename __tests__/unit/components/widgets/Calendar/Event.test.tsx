@@ -1,20 +1,10 @@
-import { faker } from '@faker-js/faker'
 import { render, screen } from '@testing-library/react'
-import { DateTime } from 'luxon'
+import { generateEvent } from 'tests/__mocks__'
 import { VEvent } from 'ts-ics'
 import { DateFormatType, formatDate } from 'utils'
-import { END_TIME_PREFIX, Event, LOCATION_PREFIX } from 'components/widgets/Calendar/Event'
+import { END_TIME_PREFIX, Event, LOCATION_PREFIX } from 'widgets/Calendar/Event'
 
-const eventData: VEvent = {
-	attach: `${faker.internet.url()}?id=${faker.string.uuid()}`,
-	description: faker.lorem.paragraph(),
-	end: { date: faker.date.future() },
-	location: faker.location.city(),
-	stamp: { date: faker.date.soon() },
-	start: { date: faker.date.soon() },
-	summary: faker.lorem.paragraph(),
-	uid: faker.string.uuid()
-}
+const eventData: VEvent = generateEvent({})
 
 describe('Event', () => {
 	test('renders event summary', () => {
@@ -29,7 +19,7 @@ describe('Event', () => {
 	})
 
 	test('renders event end time', () => {
-		const endTime = formatDate({ date: eventData.end.date, format: DateFormatType.TIME }) as string
+		const endTime = formatDate({ date: eventData.end?.date, format: DateFormatType.TIME }) as string
 		render(<Event data={eventData} />)
 		expect(screen.getByText(`${END_TIME_PREFIX}${endTime}`)).toBeInTheDocument()
 	})
