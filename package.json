@@ -1,7 +1,7 @@
 {
   "private": true,
   "scripts": {
-    "dev": "next",
+    "dev": "next --experimental-https",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
@@ -12,19 +12,19 @@
     "test": "yarn test:unit && yarn test:integration && yarn test:e2e"
   },
   "dependencies": {
-    "classnames": "^2.3.2",
-    "date-fns": "^2.28.0",
+    "classnames": "^2.5.1",
+    "date-fns": "^3.6.0",
     "lodash": "^4.17.21",
-    "luxon": "^3.4.3",
-    "next": "14.0.1",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "simple-icons": "^9.19.1",
-    "ts-ics": "^1.0.10",
-    "zod": "^3.22.4"
+    "luxon": "^3.4.4",
+    "next": "14.2.4",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "simple-icons": "^12.2.0",
+    "ts-ics": "^1.4.0",
+    "zod": "^3.23.8"
   },
   "devDependencies": {
-    "@faker-js/faker": "^8.2.0",
+    "@faker-js/faker": "^8.4.1",
     "@next/bundle-analyzer": "^14.0.1",
     "@testing-library/jest-dom": "^6.1.4",
     "@testing-library/react": "^14.0.0",
