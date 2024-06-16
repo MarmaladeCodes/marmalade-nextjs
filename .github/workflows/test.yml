@@ -89,7 +89,7 @@ jobs:
         with:
           globs: |
             **/*.md
-            !**/*.md" "#**/node_modules/**
+            !**/node_modules/**
 
       - name: Lint project
         if: steps.changed-project-lint.outputs.any_modified == 'true'
