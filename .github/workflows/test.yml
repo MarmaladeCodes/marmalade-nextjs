@@ -1,105 +1,66 @@
-name: Run All Tests
+name: Code Quality
 on:
   pull_request:
     branches: [develop]
     types: [opened, reopened, synchronize]
   workflow_dispatch:
 jobs:
-  info:
-    name: Gather info for jobs
-    timeout-minutes: 1
-    runs-on: ubuntu-latest
-    outputs:
-      branch: ${{ steps.target_branch.outputs.branch }}
-      # changed_deps: ${{ steps.changed_deps.outputs.any_changed }}
-      env_name: ${{ steps.environment.outputs.name }}
-    steps:
-      - name: Get target branch
-        run: |
-          branch=${{ github.event.pull_request.base.ref }}
-          echo "branch=${branch}" >> $GITHUB_OUTPUT
-
-          echo "::group::Branch"
-          echo 'environment: '${branch}
-          echo "::endgroup::"
-        id: target_branch
-
-      - name: Get environment
-        run: |
-          env=dev
-          if [ "${{ steps.target_branch.outputs.name }}" = "main" ]
-          then
-            env=prod
-          fi
-          echo "name=${env}" >> $GITHUB_OUTPUT
-
-          echo "::group::Environment"
-          echo 'environment: '${env}
-          echo "::endgroup::"
-        id: environment
-
-      # - name: Checkout code
-      #   uses: actions/checkout@v4
-      #   with:
-      #     fetch-depth: 0
-
-      # - name: Get changed dependency files
-      #   id: changed_deps
-      #   uses: tj-actions/changed-files@v39
-      #   with:
-      #     files: |
-      #       package.json
-      #       yarn.lock
-
-      # - name: Did Deps Change
-      #   run: |
-      #     echo "::group::Changes"
-      #     echo 'Changed?: '${{ steps.changed_deps.outputs.any_changed }}
-      #     echo "::endgroup::"
-
-  # build_dep_image:
-  #   name: Build dependency image
-  #   needs: [info]
-  #   if: needs.info.outputs.changed_deps == 'true'
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - name: Checkout code
-  #       uses: actions/checkout@v4
-  #       with:
-  #         fetch-depth: 0
-
-  #     - name: Build and push Docker image
-  #       env:
-  #         CI_PROJECT_NAME: "${{ github.repository }}/${{ github.event.pull_request.head.ref }}"
-  #         CONTAINER_NAME: "${{ env.CI_REGISTRY_IMAGE }}:deps"
-  #         LATEST_NAME: "${{ env.CI_REGISTRY_IMAGE }}:deps-${{ needs.info.outputs.branch }}-latest"
-  #       run: |
-  #         docker compose build deps;
-  #         sudo docker build --build-arg R_VERSION=${R_VERSION} --cache-from ${LATEST_NAME} --tag ${CONTAINER_NAME} --tag ${LATEST_NAME} .
-  #         sudo docker login ghcr.io -u ${{ github.actor }} -p ${{ secrets.GITHUB_TOKEN }}
-  #         sudo docker push ${CONTAINER_NAME}
-  #         sudo docker push $LATEST_NAME;
-
   test:
     name: Lint and test
     timeout-minutes: 15
     runs-on: ubuntu-latest
-    needs: [info]
     environment:
-      name: ${{ needs.info.outputs.env_name }}
+      name: dev
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
+      - name: Get changed project files (lint)
+        id: changed-project-lint
+        uses: tj-actions/changed-files@v41
+        with:
+          files: |
+            **/*.{js,ts,tsx}
+            .github/workflows/test.yml
+          files_ignore: |
+            .eslintrc.js,
+            jest.config.js,
+            next.config.js,
+            postcss.config.js,
+            .prettierrc.js,
+            tailwind.config.js
+
+      - name: Get changed project files (test)
+        id: changed-project-test
+        uses: tj-actions/changed-files@v41
+        with:
+          files: |
+            **/*.{js,ts,tsx}
+            .github/workflows/test.yml
+          files_ignore: |
+            .eslintrc.js,
+            postcss.config.js,
+            tailwind.config.js
+
+      - name: Get changed markdown files
+        id: changed-markdown
+        uses: tj-actions/changed-files@v41
+        with:
+          files: |
+            **/*.md
+            .github/workflows/test.yml
+
       - name: Setup Node JS
+        if: steps.changed-project-test.outputs.any_modified == 'true' || steps.changed-project-lint.outputs.any_modified == 'true'
         uses: actions/setup-node@v3
         with:
           node-version: ${{ vars.NODE_VERSION || 'latest' }}
           cache: 'yarn'
 
       - name: Install dependencies
+        if: steps.changed-project-test.outputs.any_modified == 'true' || steps.changed-project-lint.outputs.any_modified == 'true'
         run: |
           echo "::group::Node version"
           echo 'node version requested: ${{ vars.NODE_VERSION || 'latest' }}'
@@ -122,7 +83,16 @@ jobs:
 
           yarn install --immutable
 
+      - name: Lint all Documentation
+        if: steps.changed-markdown.outputs.any_modified == 'true'
+        uses: DavidAnson/markdownlint-cli2-action@v14
+        with:
+          globs: |
+            **/*.md
+            !**/*.md" "#**/node_modules/**
+
       - name: Lint project
+        if: steps.changed-project-lint.outputs.any_modified == 'true'
         env:
           WP_DOMAIN: ${{ vars.WP_DOMAIN }}
           WP_API_URL: http://${{ vars.WP_DOMAIN }}
@@ -130,6 +100,7 @@ jobs:
         run: yarn lint
 
       - name: Run Jest
+        if: steps.changed-project-test.outputs.any_modified == 'true'
         env:
           WP_DOMAIN: ${{ vars.WP_DOMAIN }}
           WP_API_URL: http://${{ vars.WP_DOMAIN }}
@@ -137,4 +108,5 @@ jobs:
         run: yarn test:unit
 
       # - name: Run Playwright tests
+      #   if: steps.changed-project-test.outputs.any_modified == 'true'
       #   run: yarn test:e2e
