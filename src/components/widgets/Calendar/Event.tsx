@@ -1,5 +1,5 @@
 import { VEvent } from 'ts-ics'
-import { DateFormatType, fixGoogleIcsString, formatDate, getGoogleDriveImage } from 'utils'
+import { DateFormatType, fixGoogleIcsString, formatDate, getGoogleDriveImage } from './utils'
 
 export const END_TIME_PREFIX = 'till '
 export const LOCATION_PREFIX = '@ '

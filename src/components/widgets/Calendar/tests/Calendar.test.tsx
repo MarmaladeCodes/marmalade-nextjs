@@ -1,7 +1,7 @@
 import { render } from '@testing-library/react'
 import { generateEvents } from 'mocks'
-import { formatDate } from 'utils'
-import { Calendar, NO_EVENTS_MSG, SortOrder } from 'widgets'
+import { Calendar, NO_EVENTS_MSG, SortOrder } from '../'
+import { formatDate } from '../utils'
 
 describe('Calendar', () => {
 	test('renders no events message when no events provided', () => {

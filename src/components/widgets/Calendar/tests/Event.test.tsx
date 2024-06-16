@@ -1,8 +1,8 @@
 import { render, screen } from '@testing-library/react'
 import { generateEvent } from 'tests/__mocks__'
 import { VEvent } from 'ts-ics'
-import { DateFormatType, formatDate } from 'utils'
-import { END_TIME_PREFIX, Event, LOCATION_PREFIX } from 'widgets/Calendar/Event'
+import { END_TIME_PREFIX, Event, LOCATION_PREFIX } from '../Event'
+import { DateFormatType, formatDate } from '../utils'
 
 const eventData: VEvent = generateEvent({})
 
