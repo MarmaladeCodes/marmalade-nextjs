@@ -56,7 +56,6 @@ export function Event({
 							className={'poster-calendar'}
 							height={200}
 							loading={'lazy'}
-							placeholder={'blur'}
 							src={poster}
 							width={100}
 						/>
