@@ -1,4 +1,4 @@
-name: Deploy to Production Server
+name: Create Release
 on:
   push:
     branches:
@@ -65,7 +65,7 @@ jobs:
             +([0-9]).+([0-9]).+([0-9])?(-|+)*([0-9A-Za-z+-.]))  read -r env <<< "prod";     ;;
           esac
 
-          echo "name=${env}" >> $GITHUB_OUTPUT
+          echo "env_name=${env}" >> $GITHUB_OUTPUT
 
           echo "::group::Environment"
           echo 'environment: '${env}
@@ -73,8 +73,8 @@ jobs:
         shell: bash
         id: environment
 
-  deploy:
-    name: Deploy to ${{ needs.info.outputs.env_name }}
+  release:
+    name: Create release for ${{ needs.info.outputs.env_name }}
     runs-on: ubuntu-latest
     needs: [info]
     environment:
