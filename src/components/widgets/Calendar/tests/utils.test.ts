@@ -1,7 +1,7 @@
 import { faker } from '@faker-js/faker'
 import { DateTime } from 'luxon'
-import { DateFormatType, compareDate, formatDate, getGoogleDriveImage } from 'utils/Calendar'
 import { GOOGLE_IMAGE_URL } from 'utils/constants'
+import { DateFormatType, compareDate, formatDate, getGoogleDriveImage } from '../utils'
 
 describe('compareDate', () => {
 	it('returns 1 if passed date is in the future', () => {
