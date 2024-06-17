@@ -14,8 +14,8 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       env_name: ${{ steps.environment.outputs.env_name }}
-      branch: ${{ steps.environment.outputs.branch }}
-      tag: ${{ steps.environment.outputs.tag }}
+      branch: ${{ steps.target_branch.outputs.branch }}
+      tag: ${{ steps.tag.outputs.tag }}
     steps:
       - name: Get tag
         run: |
