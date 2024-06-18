@@ -2,11 +2,12 @@ import { Container, Layout } from 'components'
 import { GetStaticProps } from 'next'
 import Image from 'next/image'
 import { Head, Icon } from 'partials'
-import { siBandcamp, siFacebook, siInstagram, siReverbnation, siTwitter } from 'simple-icons'
+import { siBandcamp, siFacebook, siInstagram, siReverbnation, siX } from 'simple-icons'
 import { type VCalendar } from 'ts-ics'
 import { HomePageData, Preview } from 'types'
-import { getContactData, getHomePageData, getIcs } from 'utils'
+import { getContactData, getHomePageData } from 'utils'
 import { Calendar, MusicPlayer } from 'widgets'
+import { getIcs } from 'widgets/Calendar/utils'
 import { HEAD_LINKS, HEAD_META, PLACEHOLDER_IMAGE } from 'utils/constants'
 
 export default function Index({
@@ -123,7 +124,7 @@ export default function Index({
 											className={'flex whitespace-nowrap'}
 											title={`Marmalade on Twitter (X)`}
 										>
-											<Icon className={'block mr-2 icon-social'} icon={siTwitter} />
+											<Icon className={'block mr-2 icon-social'} icon={siX} />
 											<span className={`block`}>{`Twitter (X)`}</span>
 										</a>
 									</li>

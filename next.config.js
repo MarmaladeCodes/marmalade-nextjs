@@ -39,6 +39,14 @@ module.exports = withBundleAnalyzer({
 			{
 				protocol: 'https',
 				hostname: 'secure.gravatar.com'
+			},
+			{
+				protocol: 'https',
+				hostname: 'api.dev.marmaladians.com'
+			},
+			{
+				protocol: 'https',
+				hostname: 'api.marmaladians.com'
 			}
 		]
 	},

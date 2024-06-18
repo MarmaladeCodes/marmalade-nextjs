@@ -1,7 +1,7 @@
 import { DateTime } from 'luxon'
 import { VEvent } from 'ts-ics'
-import { DateFormatType, compareDate, formatDate, normalizeDate } from 'utils'
 import { Event } from './Event'
+import { DateFormatType, compareDate, formatDate, normalizeDate } from './utils'
 
 export const NO_EVENTS_MSG = 'Stay tuned!'
 

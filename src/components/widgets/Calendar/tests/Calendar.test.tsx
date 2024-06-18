@@ -1,7 +1,7 @@
 import { render } from '@testing-library/react'
 import { generateEvents } from 'mocks'
-import { formatDate } from 'utils'
-import { Calendar, NO_EVENTS_MSG, SortOrder } from 'widgets'
+import { Calendar, NO_EVENTS_MSG, SortOrder } from '../'
+import { formatDate } from '../utils'
 
 describe('Calendar', () => {
 	test('renders no events message when no events provided', () => {
@@ -15,12 +15,7 @@ describe('Calendar', () => {
 		const expectedDate02 = formatDate({ date: events[1].start.date })
 		const { container } = render(<Calendar events={events} />)
 		const elements = container.querySelectorAll('.event-date')
-		const dates: string[] = []
-		for (let i in elements) {
-			if (elements.hasOwnProperty(i)) {
-				dates.push(elements[i].innerHTML)
-			}
-		}
+		const dates: string[] = [...elements].map((element: Element) => element.innerHTML)
 		expect(dates).toEqual([expectedDate01, expectedDate02])
 	})
 
@@ -30,12 +25,7 @@ describe('Calendar', () => {
 		const expectedDate02 = formatDate({ date: events[1].start.date })
 		const { container } = render(<Calendar events={events} order={SortOrder.DESC} />)
 		const elements = container.querySelectorAll('.event-date')
-		const dates: string[] = []
-		for (let i in elements) {
-			if (elements.hasOwnProperty(i)) {
-				dates.push(elements[i].innerHTML)
-			}
-		}
+		const dates: string[] = [...elements].map((element: Element) => element.innerHTML)
 		expect(dates).toEqual([expectedDate02, expectedDate01])
 	})
 
@@ -46,12 +36,7 @@ describe('Calendar', () => {
 		const expectedDate02 = formatDate({ date: events[0].start.date })
 		const { container } = render(<Calendar events={events} past={true} />)
 		const elements = container.querySelectorAll('.event-date')
-		const dates: string[] = []
-		for (let i in elements) {
-			if (elements.hasOwnProperty(i)) {
-				dates.push(elements[i].innerHTML)
-			}
-		}
+		const dates: string[] = [...elements].map((element: Element) => element.innerHTML)
 		expect(dates).toEqual([expectedDate01, expectedDate02])
 	})
 
@@ -67,12 +52,7 @@ describe('Calendar', () => {
 		const expectedDate04 = formatDate({ date: events[3].start.date })
 		const { container } = render(<Calendar events={events} all={true} />)
 		const elements = container.querySelectorAll('.event-date')
-		const dates: string[] = []
-		for (let i in elements) {
-			if (elements.hasOwnProperty(i)) {
-				dates.push(elements[i].innerHTML)
-			}
-		}
+		const dates: string[] = [...elements].map((element: Element) => element.innerHTML)
 		expect(dates).toEqual([expectedDate01, expectedDate02, expectedDate03, expectedDate04])
 	})
 
@@ -88,12 +68,7 @@ describe('Calendar', () => {
 		const expectedDate04 = formatDate({ date: events[3].start.date })
 		const { container } = render(<Calendar all={true} events={events} order={SortOrder.DESC} />)
 		const elements = container.querySelectorAll('.event-date')
-		const dates: string[] = []
-		for (let i in elements) {
-			if (elements.hasOwnProperty(i)) {
-				dates.push(elements[i].innerHTML)
-			}
-		}
+		const dates: string[] = [...elements].map((element: Element) => element.innerHTML)
 		expect(dates).toEqual([expectedDate04, expectedDate03, expectedDate02, expectedDate01])
 	})
 })
