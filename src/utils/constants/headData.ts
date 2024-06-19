@@ -68,6 +68,10 @@ export const HEAD_LINKS = [
 		rel: ALTERNATE,
 		href: '/feed.xml',
 		type: 'application/rss+xml'
+	},
+	{
+		rel: STYLE_SHEET,
+		href: 'https://sibforms.com/forms/end-form/build/sib-styles.css'
 	}
 ]
 
