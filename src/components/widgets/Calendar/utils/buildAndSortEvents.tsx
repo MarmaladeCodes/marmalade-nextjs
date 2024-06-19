@@ -1,8 +1,8 @@
 import { DateTime } from 'luxon'
 import { VEvent } from 'ts-ics'
 import { Event } from '../'
-import { SortOrder, SortOrderType } from '../types'
-import { DateFormatType, compareDate, formatDate, normalizeDate } from './'
+import { DateFormatType, SortOrder, SortOrderType } from '../types'
+import { compareDate, formatDate, normalizeDate } from './'
 
 export function buildAndSortEvents({
 	all = false,
