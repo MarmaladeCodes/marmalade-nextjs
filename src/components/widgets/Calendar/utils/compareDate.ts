@@ -1,11 +1,5 @@
 import { DateTime } from 'luxon'
 
-export enum DateFormatType {
-	DATE = 'MMMM dd, yyyy',
-	TIME = 'h:mm'
-}
-type DateFormat = DateFormatType.DATE | DateFormatType.TIME | string
-
 export function compareDate(date: DateTime): number {
 	const today = DateTime.local().startOf('day')
 	date = date.startOf('day')
