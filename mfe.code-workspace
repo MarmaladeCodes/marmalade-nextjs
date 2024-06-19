@@ -5,6 +5,12 @@
 		}
 	],
 	"settings": {
+		"cody.codebase": "https://github.com/MarmaladeCodes/marmalade-nextjs",
+		"cody.autocomplete.languages": {
+			"javascript": true,
+			"javascriptreact": true,
+			"typescript": true
+		},
 		"cSpell.enableFiletypes": ["dockercompose", "dockerfile"],
 		"editor.defaultFormatter": "esbenp.prettier-vscode",
 		"editor.formatOnSave": true,
