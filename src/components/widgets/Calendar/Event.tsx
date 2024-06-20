@@ -1,9 +1,7 @@
 import { VEvent } from 'ts-ics'
-import { DateFormatType, fixGoogleIcsString, formatDate, getGoogleDriveImage } from './utils'
-
-export const END_TIME_PREFIX = 'till '
-export const LOCATION_PREFIX = '@ '
-export const POSTER_ALT_PREFIX = 'Poster for '
+import { DateFormatType } from './types'
+import { fixGoogleIcsString, formatDate, getGoogleDriveImage } from './utils'
+import { END_TIME_PREFIX, LOCATION_PREFIX, POSTER_ALT_PREFIX } from './utils/constants'
 
 export function Event({
 	data: { attach, summary, start, end, location, description },
@@ -15,11 +13,13 @@ export function Event({
 	description = fixGoogleIcsString(description)
 	location = location?.replaceAll('\\', '')
 	summary = fixGoogleIcsString(summary)
+
 	const endTime = formatDate({ date: end?.date, format: DateFormatType.TIME })
 	const date = formatDate({ date: start.date })
 	const locationList: string[] = location?.split(',') || []
 	const startTime = formatDate({ date: start.date, format: DateFormatType.TIME })
 	const poster = attach ? getGoogleDriveImage(attach) : undefined
+
 	return (
 		<div key={`event-${startTime}-${index}`} className={`event pb-6 flex`}>
 			<div className={`content-event`}>
@@ -40,7 +40,7 @@ export function Event({
 						<span className={`block`}>{locationList[1]}</span>
 						{locationList[2] && (
 							<span className={`block`}>
-								{`${locationList[2]}${locationList[3] && `, ${locationList[3]}`}`}
+								{`${locationList[2]}${locationList[3] ? `, ${locationList[3]}` : ''}`}
 							</span>
 						)}
 						{locationList[4] && <span className={`block`}>{locationList[4]}</span>}
