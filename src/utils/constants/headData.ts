@@ -1,7 +1,10 @@
+import { PROD_DOMAIN } from './routes'
+
 // Possible `rel` attribute values
 export const ALTERNATE = `alternate`
 export const APPLE_TOUCH_ICON = `apple-touch-icon`
 export const AUTHOR = `author`
+export const CANONICAL = `canonical`
 export const DNS_PREFETCH = `dns-prefetch`
 export const FETCH = `fetch`
 export const HELP = `help`
@@ -23,6 +26,10 @@ export const STYLE = `style`
 export const STYLE_SHEET = `stylesheet`
 
 export const HEAD_LINKS = [
+	{
+		rel: CANONICAL,
+		href: `https://${PROD_DOMAIN}`
+	},
 	{
 		rel: PRECONNECT,
 		href: 'https://fonts.googleapis.com'
@@ -78,14 +85,17 @@ export const HEAD_LINKS = [
 export function HEAD_META({
 	description,
 	homeOgImageUrl,
+	isProd,
 	msapplicationTileColor,
 	themeColor
 }: {
 	description?: string
 	homeOgImageUrl: string
+	isProd?: boolean
 	msapplicationTileColor?: string
 	themeColor?: string
 }) {
+	const index: string = isProd ? 'all' : 'noindex'
 	return [
 		{
 			charSet: 'utf-8'
@@ -109,6 +119,14 @@ export function HEAD_META({
 		{
 			content: themeColor ?? '#fff',
 			name: 'theme-color'
+		},
+		{
+			content: index,
+			name: 'robots'
+		},
+		{
+			content: index,
+			name: 'googlebot'
 		},
 		{
 			content: 'description',

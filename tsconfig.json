@@ -59,8 +59,10 @@
 	"include": [
 		"src",
 		"jest.setup.ts",
+		"middleware.ts",
 		"node_modules/@types",
 		"next-env.d.ts",
+		"global.d.ts",
 		"process.d.ts",
 		"__tests__/**/**.ts",
 		"__tests__/**/**.tsx"

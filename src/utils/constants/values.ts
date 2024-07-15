@@ -1,4 +1,9 @@
+export const BREVO_FORM_URL = process.env.NEXT_PUBLIC_BREVO_FORM_URL
+
 export const MAX_AGE = 60 * 30 // 30 minutes
+
+export const RECAPTCHA_SECRET_KEY = process.env.RECAPTCHA_SECRET_KEY
+export const RECAPTCHA_SITE_KEY = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY
 
 // Token to be used in url that will be replaced by the app's set root page path
 export const ROOT_TOKEN = `%{ROOT}`

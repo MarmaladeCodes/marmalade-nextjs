@@ -6,9 +6,16 @@ import { siBandcamp, siFacebook, siInstagram, siReverbnation, siX } from 'simple
 import { type VCalendar } from 'ts-ics'
 import { HomePageData, Preview } from 'types'
 import { getContactData, getHomePageData } from 'utils'
-import { Calendar, MusicPlayer } from 'widgets'
+import { BrevoForm, Calendar, MusicPlayer } from 'widgets'
 import { getIcs } from 'widgets/Calendar/utils'
-import { HEAD_LINKS, HEAD_META, PLACEHOLDER_IMAGE } from 'utils/constants'
+import {
+	BREVO_FORM_URL,
+	HEAD_LINKS,
+	HEAD_META,
+	IS_PROD,
+	PLACEHOLDER_IMAGE,
+	RECAPTCHA_SITE_KEY
+} from 'utils/constants'
 
 export default function Index({
 	data: {
@@ -39,7 +46,7 @@ export default function Index({
 	const headData = {
 		title,
 		link: HEAD_LINKS,
-		meta: HEAD_META({ homeOgImageUrl: mediaItemUrl })
+		meta: HEAD_META({ homeOgImageUrl: mediaItemUrl, isProd: IS_PROD })
 	}
 	const { events } = JSON.parse(calendar) as VCalendar
 	const h2Class = `text-3xl uppercase font-bold pb-6`
@@ -64,7 +71,7 @@ export default function Index({
 					/>
 				)}
 			</Container>
-			<Container className={`xl:flex whitespace-pre-wrap`}>
+			<Container className={`tw-xl:flex tw-whitespace-pre-wrap`}>
 				<div className={panelClass}>
 					<h2 className={h2Class}>{calendarTitle}</h2>
 					<Calendar events={events} />
@@ -138,6 +145,7 @@ export default function Index({
 					<p className={`pb-6`}>{bio}</p>
 					<h2 className={h2Class}>{musicTitle}</h2>
 					<p>{musicDesc}</p>
+					<BrevoForm formURL={BREVO_FORM_URL} recaptchaSiteKey={RECAPTCHA_SITE_KEY} />
 				</div>
 				<div className={`${panelClass} bg-gray-3`}>
 					<h2 className={h2Class}>{playerTitle}</h2>
