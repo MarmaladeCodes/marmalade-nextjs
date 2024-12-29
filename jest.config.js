@@ -3,6 +3,27 @@ const { compilerOptions } = require('./tsconfig.json')
 
 module.exports = {
 	collectCoverageFrom: ['src/**/*.{js,jsx,ts,tsx}', '!**/*.d.ts', '!**/node_modules/**'],
+	coverageDirectory: '<rootDir>/coverage',
+	coverageProvider: 'v8',
+	coverageReporters: ['html'],
+	coveragePathIgnorePatterns: [
+		'<rootDir>/.next/',
+		'<rootDir>/__tests__/',
+		'<rootDir>/node_modules/',
+		'<rootDir>/src/config/',
+		'<rootDir>/src/constants/',
+		'<rootDir>/src/styles/',
+		'<rootDir>/src/types/',
+		'<rootDir>/vendors/'
+	],
+	// coverageThreshold: {
+	// 	global: {
+	// 		branches: 70,
+	// 		functions: 10,
+	// 		lines: 20,
+	// 		statements: -10
+	// 	}
+	// },
 	moduleNameMapper: {
 		/* Convert typescript config paths to module names for testing
 		https://kulshekhar.github.io/ts-jest/docs/getting-started/paths-mapping */
