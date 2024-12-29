@@ -34,7 +34,7 @@ Prettier uses [`./.prettierrc.js`](./.prettierrc.js) and [`./.prettierignore`](.
 
 Use the [`markdownlint` vscode extension](https://marketplace.visualstudio.com/items?itemName=DavidAnson.vscode-markdownlint).
 
-Or run in directly using [markdownlint-cli2](https://github.com/DavidAnson/markdownlint-cli2).
+Or run in directly using [markdownlint-cli2](https://github.com/DavidAnson/markdownlint-cli2) (see [.tool-versions](./.tool-versions) for version).
 This can be install via `asdf` as well: <https://github.com/paulo-ferraz-oliveira/asdf-markdownlint-cli2>
 
 ```sh

@@ -4,7 +4,7 @@ This Nextjs starter is intended to be used with a Headless Wordpress backend. Fi
 
 ## Requirements
 
-1. [Node](https://nodejs.org/en/) version 20.1.0
+1. [Node](https://nodejs.org/en/) version (see [.tool-versions](./.tool-versions))
 
    - This project is setup to use [asdf](https://github.com/asdf-vm/asdf).
      This allows installing a specific version for the project.
@@ -12,7 +12,7 @@ This Nextjs starter is intended to be used with a Headless Wordpress backend. Fi
 
    - If using [nvm](https://github.com/nvm-sh/nvm), run `nvm use` to set a compatible version based on the project [.nvmrc](./.nvmrc)
 
-2. Yarn (for package management) version 3.5.1
+2. Yarn (for package management) version (see [.tool-versions](./.tool-versions))
 
    - This project is setup to use [asdf](https://github.com/asdf-vm/asdf).
      This allows installing a specific version for the project.
@@ -28,6 +28,20 @@ This Nextjs starter is intended to be used with a Headless Wordpress backend. Fi
 
    - Set the version for the project ie: `yarn set version 3.5.1`
 
+## Local Development
+
+1. Clone this repo
+
+1. Copy the `.env.local.example` file to `.env.local` and fill in the values.
+
+1. Run `yarn install` to install dependencies
+
+1. Run `yarn dev` to start the development server
+
 ## Linting and Formatting
 
 For linting and formatting see [`LINTING.md`](./LINTING.md).
+
+## Testing
+
+For info on unit testing, see [./**tests**/TESTING.md](./__tests__/TESTING.md).

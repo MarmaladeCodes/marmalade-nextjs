@@ -25,18 +25,13 @@ export function getGoogleDriveImage(url: string) {
 	}
 }
 
-export async function getIcs(id: string): Promise<VCalendar | undefined> {
+export async function getIcs(id: string): Promise<VCalendar | Record<string, never>> {
 	try {
-		const res: VCalendar = await fetch(ICS_URL(id), {
-			method: 'GET'
-		})
-			.then((response) => response.text())
-			.then((textString) => {
-				return parseIcsCalendar(textString)
-			})
-
-		return res
+		const response = await fetch(ICS_URL(id), { method: 'GET' })
+		const textString = await response.text()
+		return parseIcsCalendar(textString)
 	} catch (error) {
-		console.log(error)
+		console.error('Error fetching or parsing ICS:', error)
+		return {}
 	}
 }
