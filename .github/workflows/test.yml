@@ -39,6 +39,8 @@ jobs:
           files: |
             **/*.{js,ts,tsx}
             .github/workflows/test.yml
+            package.json
+            yarn.lock
           files_ignore: |
             .eslintrc.js,
             postcss.config.js,
