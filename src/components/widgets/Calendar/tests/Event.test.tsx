@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react'
-import { generateEvent } from 'tests/__mocks__'
+import { generateEvent } from 'mocks'
 import { VEvent } from 'ts-ics'
 import { Event } from '../'
 import { DateFormatType } from '../types'
