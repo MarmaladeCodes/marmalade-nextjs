@@ -96,15 +96,15 @@ jobs:
           version_tag="${version}${appendage}"
 
           echo "new_tag=${version_tag}" >> $GITHUB_OUTPUT
-          echo "semver=${version}" >> $GITHUB_OUTPUT
 
           echo "::group::Version Tag"
           echo 'Version Tag: '${version_tag}
           echo "::endgroup::"
 
-          echo "::group::Semantic Version"
-          echo 'Version: '${version}
-          echo "::endgroup::"
+          if git show-ref --tags --verify --quiet "refs/tags/${version_tag}"; then
+              echo "The tag ${version_tag} already exists, skipping deploy."
+              exit 1
+          fi
 
           git checkout ${{ needs.info.outputs.branch }}
           git tag "${version_tag}"
@@ -119,19 +119,7 @@ jobs:
           echo "Previous Tag: ${previous_tag}"
           echo "::endgroup::"
         shell: bash
-        id: version
-
-      - name: Check for Tag
-        run: |
-          tag="${{ steps.version.outputs.new_tag }}"
-
-          if git show-ref --tags --verify --quiet "refs/tags/${tag}"; then
-              echo "The tag ${tag} already exists, skipping deploy."
-              exit 1
-          fi
-
-          echo "Proceeding with deploy."
-        shell: bash
+        id: image_tags
 
       - name: Create/Update CHANGELOG
         id: changelog
@@ -150,10 +138,10 @@ jobs:
         with:
           body: ${{ steps.changelog.outputs.changes }}
           makeLatest: ${{ needs.info.outputs.env_name == 'prod' }}
-          name: ${{ steps.version.outputs.new_tag }}
+          name: ${{ steps.image_tags.outputs.new_tag }}
           prerelease: ${{ needs.info.outputs.env_name != 'prod' }}
           skipIfReleaseExists: true
-          tag: ${{ steps.version.outputs.new_tag }}
+          tag: ${{ steps.image_tags.outputs.new_tag }}
 
       - name: Clean up on failure
         if: ${{ failure() && steps.image_tags.outputs.new_tag }}
