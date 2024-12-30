@@ -95,36 +95,56 @@ jobs:
           fi
           version_tag="${version}${appendage}"
 
-          echo "version_tag=${version_tag}" >> $GITHUB_OUTPUT
-          echo "semver=${version}" >> $GITHUB_OUTPUT
+          echo "new_tag=${version_tag}" >> $GITHUB_OUTPUT
 
           echo "::group::Version Tag"
           echo 'Version Tag: '${version_tag}
           echo "::endgroup::"
 
-          echo "::group::Semantic Version"
-          echo 'Version: '${version}
-          echo "::endgroup::"
-        shell: bash
-        id: version
-
-      - name: Check for Tag
-        run: |
-          tag="${{ steps.version.outputs.version_tag }}"
-
-          if git show-ref --tags --verify --quiet "refs/tags/${tag}"; then
-              echo "The tag ${tag} already exists, skipping deploy."
+          if git show-ref --tags --verify --quiet "refs/tags/${version_tag}"; then
+              echo "The tag ${version_tag} already exists, skipping deploy."
               exit 1
           fi
-          echo "Proceeding with deploy."
+
+          git checkout ${{ needs.info.outputs.branch }}
+          git tag "${version_tag}"
+          git push origin tag "${version_tag}"
+
+          # Get all tags sorted by version, filtered by the module name
+          previous_tag=$(git tag --sort=-v:refname | grep -E "^[0-9]+\.[0-9]+\.[0-9]+${appendage}$" | sed -n '2p')
+
+          echo "previous_tag=${previous_tag}" >> $GITHUB_OUTPUT
+
+          echo "::group::Previous Tag"
+          echo "Previous Tag: ${previous_tag}"
+          echo "::endgroup::"
         shell: bash
+        id: image_tags
+
+      - name: Create/Update CHANGELOG
+        id: changelog
+        uses: requarks/changelog-action@v1
+        with:
+          excludeTypes: ''
+          fromTag: ${{ steps.image_tags.outputs.previous_tag != '' && steps.image_tags.outputs.new_tag || '' }}
+          includeInvalidCommits: true
+          tag: ${{ steps.image_tags.outputs.previous_tag == '' && steps.image_tags.outputs.new_tag || '' }}
+          toTag: ${{ steps.image_tags.outputs.previous_tag != '' && steps.image_tags.outputs.previous_tag || '' }}
+          token: ${{ github.token }}
+          writeToFile: false
 
       - name: Create release
         uses: ncipollo/release-action@v1
         with:
-          generateReleaseNotes: true
+          body: ${{ steps.changelog.outputs.changes }}
           makeLatest: ${{ needs.info.outputs.env_name == 'prod' }}
-          name: ${{ steps.version.outputs.version_tag }}
+          name: ${{ steps.image_tags.outputs.new_tag }}
           prerelease: ${{ needs.info.outputs.env_name != 'prod' }}
           skipIfReleaseExists: true
-          tag: ${{ steps.version.outputs.version_tag }}
+          tag: ${{ steps.image_tags.outputs.new_tag }}
+
+      - name: Clean up on failure
+        if: ${{ failure() && steps.image_tags.outputs.new_tag }}
+        run: |
+          git push --delete origin "${{ steps.image_tags.outputs.new_tag }}"
+        shell: bash
